@@ -18,4 +18,8 @@
 ⭐ To Run:
 - node app
 
+⭐ Run Unit test - chai & mocha:
+- it's on folder called test.
+- npm test
+
 **The server will run on this url: http://localhost:8080**
