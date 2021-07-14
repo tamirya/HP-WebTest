@@ -8,11 +8,10 @@
 // Q & A
 /*
   Q: What do you think is wrong with the code, if anything?
-  A: well, from reading the code, it was hard to understand the flow of the code.
-     and this type of code is hard to maintain.
+  A: well, from reading the code, it was hard to understand the flow of the code and this type of code is hard to maintain.
 
   Q: Can you see any potential problems that could lead to exceptions
-  A: yes, thier is no validations on params, no use of try & catch.
+  A: yes, thier is no validations on parameters, no use of try & catch.
 
   Q: How would you refactor this code to:
     * Make it easier to read
@@ -21,13 +20,17 @@
     * Improve the testability of the code
   
   A: * split the logic to smaller functions would make it more maintainable and we can reuse the functions.
-     * for stability we can use of try & catch so if their is an erorr it will not fail our system.
-     * once the code is splited to smaller functions we can test each function separately.
-
-  
+     * for stability of the system:
+        * Error Reporting
+        * Build Pipeline Tests
+        * unit tests
+     * for testability of the code:
+       * split to smaller functions for debugging and tests
+       * decoupled the code
+       * use code coverage tool
+       
   Q: How might you use the latest JavaScript features to refactor the code?
   A: well, i would use ES6 features and functions like: async await and spread operators.
-
 */
 
 /**
