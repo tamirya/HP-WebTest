@@ -40,13 +40,9 @@
  * @returns Promise
  */
 function updateUser(authId,email){
-    try {
-        return User.findOneAndUpdate({authId}, 
-            { authId,email },
-            { upsert: true, new: true }).exec();
-    } catch(err) {
-        return err;
-    }
+  return User.findOneAndUpdate({authId}, 
+      { authId,email },
+      { upsert: true, new: true }).exec();
 };
 
 // find shop by id
@@ -54,11 +50,7 @@ function updateUser(authId,email){
  * @returns Promise
  */
 function findShopById(shopId){
-    try {
-        return Shop.findById(shopId).exec();
-    } catch(err) {
-        return err;
-    }
+  return Shop.findById(shopId).exec();
 }
 
 /**
