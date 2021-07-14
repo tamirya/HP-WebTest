@@ -11,7 +11,7 @@
 
 **The app will run on this url: http://localhost:3000**
 
-# Backend- Node.Js
+# Backend- Node.Js with Express
 1. cd server
 2. npm install
 
