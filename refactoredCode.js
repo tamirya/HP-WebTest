@@ -66,7 +66,7 @@ exports.inviteUserRefactor = async(req, res)=>{
     // validatedInvitationBody is function to validated the params
     if(!validatedInvitationBody(invitationBody)){
         logs.logger({error: true, message: 'Invitation Body Wrong' })
-        return res.status(500).json({ message: 'Invitation Body Wrong' });
+        return res.status(500).json({error: true, message: 'Invitation Body Wrong' });
     }
 
     // get the shop ID
@@ -79,8 +79,8 @@ exports.inviteUserRefactor = async(req, res)=>{
         const shop = await findShopById(shopId);
         // if no shop exsits
         if (!shop) {
-            logs.logger({ message: 'No Shop Found' })
-            return res.status(500).send({ error: true, message: 'No Shop Found' });
+            logs.logger({ error: true, message: 'No Shop Found' })
+            return res.status(500).json({ error: true, message: 'No Shop Found' });
         }
 
         // make a call to auth url with invitationBody
@@ -94,7 +94,7 @@ exports.inviteUserRefactor = async(req, res)=>{
               // if no user exsits
               if (!createdUser) {
                 logs.logger({error: true, message: 'No User Found' })
-                return res.status(500).send({ message: 'No User Found' });
+                return res.status(500).json({ error: true, message: 'No User Found' });
               }             
               
               // update invitations if not exsits 
@@ -130,6 +130,6 @@ exports.inviteUserRefactor = async(req, res)=>{
             message: err.message
           });        
           // send error response
-        return res.status(500).send(err);
+        return res.status(500).json({error: true, message: err.message });
       }
 }
