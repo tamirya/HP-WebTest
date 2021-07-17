@@ -24,6 +24,7 @@
         * Error Reporting
         * Build Pipeline Tests
         * unit tests
+        * logs
      * for testability of the code:
        * split to smaller functions for debugging and tests
        * decoupled the code
@@ -64,6 +65,7 @@ exports.inviteUserRefactor = async(req, res)=>{
     const invitationBody = req.body;
     // validatedInvitationBody is function to validated the params
     if(!validatedInvitationBody(invitationBody)){
+        logs.logger({error: true, message: 'Invitation Body Wrong' })
         return res.status(500).json({ message: 'Invitation Body Wrong' });
     }
 
@@ -77,7 +79,8 @@ exports.inviteUserRefactor = async(req, res)=>{
         const shop = await findShopById(shopId);
         // if no shop exsits
         if (!shop) {
-            return res.status(500).send({ message: 'No Shop Found' });
+            logs.logger({ message: 'No Shop Found' })
+            return res.status(500).send({ error: true, message: 'No Shop Found' });
         }
 
         // make a call to auth url with invitationBody
@@ -90,6 +93,7 @@ exports.inviteUserRefactor = async(req, res)=>{
               const createdUser = await updateUser(authId, invitationBody.email);
               // if no user exsits
               if (!createdUser) {
+                logs.logger({error: true, message: 'No User Found' })
                 return res.status(500).send({ message: 'No User Found' });
               }             
               
@@ -106,8 +110,13 @@ exports.inviteUserRefactor = async(req, res)=>{
               // save shop
               await shop.save();
           // if invitationResponse.status eq to 200    
-        } else if (invitationResponse.status === 200) {
-          // send error response
+        } else if (invitationResponse.status === 200) {  
+            logs.logger({
+              error: true,
+              message: 'User already invited to this shop'
+            });
+          
+            // send error response
             return res.status(400).json({
               error: true,
               message: 'User already invited to this shop'
@@ -116,6 +125,10 @@ exports.inviteUserRefactor = async(req, res)=>{
           // send back the invitationResponse
         return res.json(invitationResponse);
       } catch (err) {
+          logs.logger({
+            error: true,
+            message: err.message
+          });        
           // send error response
         return res.status(500).send(err);
       }
